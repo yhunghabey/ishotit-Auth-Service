@@ -206,7 +206,7 @@ export async function updateAccountStatus(user, body) {
         new: true,
       });
 
-    return successMessage("Account status changed to " + body.status);
+    return successMessage("Account Status Changed To " + body.status);
   } catch (err) {
     throw err;
   }
