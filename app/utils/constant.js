@@ -1,5 +1,5 @@
 export const USERTYPE = {
-  CUSTOMERS: [
+  USER: [
     "CAN_CREATE",
     "CAN_POST",
     "CAN_LIKE",

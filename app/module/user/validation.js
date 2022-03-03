@@ -28,7 +28,7 @@ export default{
               .trim()
               .optional(),
             userType: Joi.string()
-              .valid('DELIVERY-RIDERS', 'DOCTORS', 'CUSTOMERS', 'MERCHANTS')
+              .valid('USER', 'ADMIN')
               .trim(),
             token: Joi.string(),
           }),
@@ -119,9 +119,6 @@ export default{
       updateAccountStatus: {
         body: {
           schema: Joi.object({
-            id: Joi.string()
-              .max(36)
-              .required(),
             status: Joi.string()
               .valid("ACTIVE", "BLOCKED", "PENDING", "DEACTIVATE")
               .required(),

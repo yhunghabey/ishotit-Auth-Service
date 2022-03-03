@@ -5,6 +5,7 @@ import {
   AuthenticationError,
   encodeJwt,
   decodeJwt,
+  successMessage,
   NotFoundError,
 } from "iyasunday";
 import bcrypt from "bcrypt";
@@ -193,15 +194,18 @@ export async function verifyEmail(params) {
   }
 }
 
-export async function updateAccountStatus(body) {
+export async function updateAccountStatus(user, body) {
   try {
-    const user = await User.findById({ _id: body.id });
-
-    if (!user) throw new NotFoundError("User account not found");
-    else if (user.status === body.status)
+    const updateStatus = await User.findById({ _id: user.id });
+   
+    if (!updateStatus) throw new NotFoundError("User account not found");
+    else if (updateStatus.status === body.status)
       throw new ExistsError("Account status is already " + body.status);
 
-    await user.findOneAndUpdate({ status: body.status });
+      const update = await User.findByIdAndUpdate({ _id: user.id }, body, {
+        new: true,
+      });
+
     return successMessage("Account status changed to " + body.status);
   } catch (err) {
     throw err;

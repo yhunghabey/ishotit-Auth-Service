@@ -19,7 +19,7 @@ route.patch(
 );
 
 route.get(
-  "/user/:id",
+  "/user",
   guard(),
   joiValidator(validation.getUser),
   controller.getuser
@@ -28,7 +28,6 @@ route.get(
 route.get(
   "/users",
   guard(),
-  //joiValidator(validation.update),
   controller.getusers
 );
 
@@ -49,6 +48,13 @@ route.post(
   "/user/verification/email",
   joiValidator(validation.sendEmailVerification),
   controller.sendEmailVerification
+);
+
+route.post(
+  "/user/update/accountstatus",
+  guard(),
+  joiValidator(validation.updateAccountStatus),
+  controller.updateAccountStatus
 );
 
 export default route;

@@ -50,7 +50,7 @@ export async function changePassword(req,res,next){
 
 export async function updateAccountStatus(req, res, next) {
     try {
-      res.status(200).json(await service.updateAccountStatus(req.body));
+      res.status(200).json(await service.updateAccountStatus(req.user, req.body));
     } catch (err) {
       next(err);
     }
