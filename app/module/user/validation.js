@@ -10,15 +10,14 @@ export default{
               .trim()
               .lowercase()
               .required(),
-            phoneNumber: Joi.string()
-              .trim()
-              .required(),
+            
             password: Joi.string().required(),
   
             username: Joi.string()
               .lowercase()
               .min(3)
-              .trim(),
+              .trim()
+              .required(),
             firstname: Joi.string()
               .max(50)
               .trim()
@@ -30,6 +29,7 @@ export default{
             userType: Joi.string()
               .valid('USER', 'ADMIN')
               .trim(),
+            photo: Joi.string(),
             token: Joi.string(),
           }),
         },

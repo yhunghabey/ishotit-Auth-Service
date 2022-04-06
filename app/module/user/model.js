@@ -32,6 +32,7 @@ const UserSchema = mongoose.Schema({
   },
   username: {
     type: String,
+    required: true,
   },
   phoneNumber: {
     type: String,
@@ -45,6 +46,7 @@ const UserSchema = mongoose.Schema({
   userType: {
     type: String,
     enum: Object.keys(USERTYPE),
+    default: 'USER',
   },
   permissions: {
     type: Array,

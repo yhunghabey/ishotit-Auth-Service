@@ -42,11 +42,11 @@ export async function signup(body) {
     let newUser = new User();
     newUser.firstname = body.firstname;
     newUser.lastname = body.lastname;
+    newUser.username = body.username;
     newUser.email = body.email.trim();
-    newUser.phoneNumber = body.phoneNumber;
     newUser.password = body.password;
-    newUser.userType = body.userType.toUpperCase();
-    newUser.permissions = USERTYPE[body.userType.toUpperCase()];
+    newUser.photo = body.photo;
+    //newUser.permissions = USERTYPE[body.userType.toUpperCase()];
     await newUser.save();
     return {
       success,
