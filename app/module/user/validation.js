@@ -10,9 +10,7 @@ export default{
               .trim()
               .lowercase()
               .required(),
-            
             password: Joi.string().required(),
-  
             username: Joi.string()
               .lowercase()
               .min(3)

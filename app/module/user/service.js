@@ -30,6 +30,7 @@ async function setAuth(userObj) {
 
 export async function signup(body) {
   try {
+    
     const isExist = await User.findOne({ email: body.email });
     if (isExist) {
       throw new ExistsError(`${body.email} already Exist`);
@@ -42,7 +43,8 @@ export async function signup(body) {
     newUser.email = body.email.trim();
     newUser.password = body.password;
     newUser.photo = body.photo;
-    //newUser.permissions = USERTYPE[body.userType.toUpperCase()];
+    newUser.userType = body.userType;
+    newUser.permissions = USERTYPE[body.userType.toUpperCase()];
     await newUser.save();
     return {
       success,
