@@ -36,7 +36,6 @@ const UserSchema = mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    //unique: [true, 'User with phone number already exists'],
   },
   password: {
     type: String,
