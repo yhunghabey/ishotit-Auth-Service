@@ -34,11 +34,7 @@ export async function signup(body) {
     if (isExist) {
       throw new ExistsError(`${body.email} already Exist`);
     }
-    const phoneExist = await User.findOne({ phoneNumber: body.phone });
-    if (phoneExist) {
-      throw new ExistsError("User with Phone Number already exists");
-    }
-
+    
     let newUser = new User();
     newUser.firstname = body.firstname;
     newUser.lastname = body.lastname;
