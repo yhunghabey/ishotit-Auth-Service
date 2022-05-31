@@ -4,10 +4,12 @@ import { joiValidator } from "iyasunday";
 import { guard } from "../../utils/middleware";
 import * as controller from "./controller";
 import validation from "./validation";
+import { multerUploads } from "../../routes/middleware"; 
 
 const route = Router();
+const upload = multerUploads.single('photo')
 
-route.post("/user/signup", joiValidator(validation.signup), controller.signup);
+route.post("/user/signup", upload, controller.signup);
 
 route.post("/user/login", joiValidator(validation.login), controller.login);
 

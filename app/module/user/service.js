@@ -7,9 +7,14 @@ import {
   decodeJwt,
   successMessage,
   NotFoundError,
+  uploadFile,
+  postContent,
 } from "iyasunday";
 import bcrypt from "bcrypt";
 import { USERTYPE } from "../../utils/constant";
+import axios from "axios";
+const FormData = require('form-data');
+const fs = require('fs');
 const CLIENT_URL = "https://ishot-it.com";
 
 async function setAuth(userObj) {
@@ -28,23 +33,32 @@ async function setAuth(userObj) {
   return userToken;
 }
 
-export async function signup(body) {
+export async function signup(body, file) {
   try {
-    
     const isExist = await User.findOne({ email: body.email });
     if (isExist) {
       throw new ExistsError(`${body.email} already Exist`);
     }
-    
+    if (!file){
+      throw new NotFoundError ('Kindly select a photo');
+    }
+    const form = new FormData();
+    const formHeaders = form.getHeaders();
+    form.append('photo', file.buffer, {filename: file.originalname});
+        const {data} = await axios.post(process.env.FILEMANAGER, form, {
+          headers: {
+            ...formHeaders,
+          },
+      })
     let newUser = new User();
     newUser.firstname = body.firstname;
     newUser.lastname = body.lastname;
     newUser.username = body.username;
-    newUser.email = body.email.trim();
+    newUser.email = body.email;
     newUser.password = body.password;
-    newUser.photo = body.photo;
     newUser.userType = body.userType;
     newUser.permissions = USERTYPE[body.userType.toUpperCase()];
+    newUser.photo = data.file.url;
     await newUser.save();
     return {
       success,

@@ -1,9 +1,10 @@
-import { errorMessage, joiValidator } from "iyasunday";
+import { errorMessage } from "iyasunday";
 import user from "../module/user";
 
 export default (app) => {
   const version = "/v1";
   app.use(version, user);
+  
 
 
   app.use((err, req, res, next) => {

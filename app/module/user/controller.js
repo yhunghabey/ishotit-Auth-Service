@@ -2,7 +2,7 @@ import * as service from './service';
 
 export async function signup(req,res,next){
     try {
-        return res.status(200).json(await service.signup(req.body))
+        return res.status(200).json(await service.signup(req.body, req.file))
     } catch (err) {
         next(err);
     }
