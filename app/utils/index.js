@@ -35,3 +35,54 @@ const mailgun = Mailgun({
       });
     });
   }
+  export function fileUpload() {
+    return async (req, res) => {
+      try {
+        req.pipe(request(process.env.FILE_MANAGER_URL)).pipe(res);
+      } catch (err) {
+        res.status(err.httpStatusCode || 500).json(errorMessage(err));
+      }
+    };
+  }
+  
+  export async function removeFile(data) {
+    try {
+      await getContent({
+        url: process.env.FILE_MANAGER_URL,
+        method: "DELETE",
+        data,
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
+  
+  export const fileManager = {
+    remove: async (fileUrl) => {
+      if (!fileUrl) return;
+      await getContent({
+        url: process.env.FILE_MANAGER_URL,
+        method: "DELETE",
+        data: { fileUrl, throwError: false },
+      });
+    },
+  
+    exists: async () =>
+      await postContent({
+        url: process.env.FILE_MANAGER_URL + "/exists",
+        data: { fileUrl },
+      }),
+  
+    url: (relativeUrl) => {
+      if (!relativeUrl) return "";
+  
+      const urlToken = relativeUrl.split("://");
+      if (urlToken.length > 1) return relativeUrl;
+  
+      const [prefix] = relativeUrl.split("-");
+      let baseUrl = process.env.FILE_MANAGER_MEDIA_URL + "/";
+      if (prefix === "s3") baseUrl = process.env.AWS_S3_BASE_URL + "/";
+      return baseUrl + relativeUrl;
+    },
+  };
+  

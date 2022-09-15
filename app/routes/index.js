@@ -1,9 +1,11 @@
 import { errorMessage } from "iyasunday";
 import user from "../module/user";
+import friendmgt from "../module/followers";
 
 export default (app) => {
   const version = "/v1";
   app.use(version, user);
+  app.use(version, friendmgt);
   
 
 
