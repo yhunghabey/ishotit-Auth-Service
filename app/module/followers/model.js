@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import user from '../user/model';
 
 const FriendMgtSchema = mongoose.Schema({
 
@@ -8,8 +9,16 @@ const FriendMgtSchema = mongoose.Schema({
   },
 
   requestUser: {
+    type: mongoose.Schema.ObjectId,
+    ref: "user",
+  },
+
+  username: {
     type: String,
-    required: true,
+  },
+
+  photo: {
+    type: String,
   },
 
   status: {

@@ -9,17 +9,20 @@ import {
 
 export async function sendRequest(user, body) {
   try {
+    const findUser = await User.findOne({_id: user.id });
     const isExist = await Friend.findOne({ requestUser: body.requestUser });
     if (isExist) {
       throw new ExistsError(`A request already Exist`);
     }
     let request = new Friend();
     request.user = user.id;
+    request.username = findUser.username;
+    request.photo = findUser.photo;
     request.requestUser = body.requestUser;
     await request.save();
     return {
       success,
-      message: `A Request has Been Sent to ${body.requestUser}`,
+      message: `A Request has been Sent to ${body.requestUser}`,
       data: request,
     };
   } catch (err) {
