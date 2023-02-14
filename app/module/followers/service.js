@@ -33,7 +33,7 @@ export async function sendRequest(user, body) {
 export async function myFriendRequest(user) {
   try {
     const getFriends = await Friend.find({ user: user.id, status: 'PENDING'  });
-    if (getFriends == "") throw new NotFoundError("No Friend Request Found");
+    if (getFriends === "") throw new NotFoundError("No Friend Request Found");
     return {
       success,
       data: getFriends,
