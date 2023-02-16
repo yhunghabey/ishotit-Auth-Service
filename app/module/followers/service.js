@@ -92,7 +92,8 @@ export async function declineRequest(body) {
 
 export async function getFriends(user) {
   try {
-    const getFriends = await Friend.find({user: user.id, status: 'ACCEPTED'});
+    const getFriends = await Friend.find({user: user._id, status: 'ACCEPTED'});
+    console.log(user);
     if (!getFriends) throw new NotFoundError("Sorry! You do not have a friend");
     return {
       success,
