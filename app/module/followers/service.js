@@ -9,7 +9,7 @@ import {
 
 export async function sendRequest(user, body) {
   try {
-    const findUser = await User.findOne({_id: user.id });
+    const findUser = await User.findOne({_id: body.requestUser });
     const isExist = await Friend.findOne({ requestUser: body.requestUser });
     if (isExist) {
       throw new ExistsError(`A request already Exist`);
