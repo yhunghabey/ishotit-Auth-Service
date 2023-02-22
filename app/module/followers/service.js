@@ -9,7 +9,7 @@ import {
 
 export async function sendRequest(user, body) {
   try {
-    const findUser = await User.findOne({_id: body.requestUser });
+    const findUser = await User.findOne({_id: user.id });
     const isExist = await Friend.findOne({ requestUser: body.requestUser });
     if (isExist) {
       throw new ExistsError(`A request already Exist`);
@@ -47,7 +47,7 @@ export async function myFriendRequest(user) {
 export async function incomingRequest(user) {
   try {
     const getFriends = await Friend.find({ requestUser: user.id, status: 'PENDING' });
-    if (getFriends == "") throw new NotFoundError("No Friend Request Found");
+    if (getFriends === "") throw new NotFoundError("No Friend Request Found");
     return {
       success,
       data: getFriends,
