@@ -46,7 +46,7 @@ export async function myFriendRequest(user) {
 
 export async function incomingRequest(user) {
   try {
-    const getFriends = await Friend.find({ requestUser: user.id });
+    const getFriends = await Friend.find({ requestUser: user.id, status: 'PENDING' });
     if (getFriends == "") throw new NotFoundError("No Friend Request Found");
     return {
       success,
@@ -76,7 +76,7 @@ export async function acceptRequest(body) {
 
 export async function declineRequest(body) {
   try {
-    const declineRequest = await Friend.findOneAndUpdate({ requestUser: body.requestUser }, {status: 'DECLINED'}, {new: true });
+    const declineRequest = await Friend.findOneAndDelete({ requestUser: body.requestUser });
     if (!declineRequest) {
       throw new NotFoundError("User not found");
     }
