@@ -37,4 +37,13 @@ route.get("/friends/list",
   guard(),
   controller.getFriends);  
 
+route.post("/friends/search",
+  guard(),
+  joiValidator(validation.searchUser),
+  controller.searchUser);
+
+route.post("/friends/status",
+  guard(),
+  controller.friendRequestStatus);
+
 export default route;

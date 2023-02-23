@@ -105,3 +105,38 @@ export async function getFriends(user) {
   }
 }
 
+export async function searchUser(body) {
+  try {
+    const result = await User.find({
+      $or: [
+        { 'username': { $regex: body.search, $options: 'i' } },
+        { 'firstname': { $regex: body.search, $options: 'i' } },
+        { 'lastname': { $regex: body.search, $options: 'i'}},
+      ],
+    }); 
+    return {
+      success,
+      data: result,
+      message: `Search Retrieved Successfully`,
+    };
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function friendRequestStatus(user, body){
+  try {
+    //const checkRequest = await Friend.findOne({ requestUser: user.id || user: body.userID, status: 'PENDING' || 'ACCEPTED' });
+    if (!checkRequest) {
+      throw new ExistsError("No Friend Request Found");
+    }
+    return {
+      success,
+      data: checkRequest,
+      message: `Like Status Retrieved Successfully`,
+    };
+  } catch (err) {
+    throw err;
+  }
+}
+

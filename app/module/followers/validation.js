@@ -25,4 +25,12 @@ export default{
           }),
         },
       },
+
+      searchUser: {
+        body: {
+          schema: Joi.object({
+            search: Joi.string(),
+          }),
+        },
+      },
 }
