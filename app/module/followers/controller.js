@@ -49,6 +49,13 @@ export async function getFriends(req,res,next){
     }
 }
 
+export async function searchUser(req, res, next) {
+    try {
+      return res.status(200).json(await service.searchUser(req.body));
+    } catch (err) {
+      next(err);
+    }
+  }
 
 
 export async function decline(req,res,next){
@@ -66,3 +73,11 @@ export async function updateAccountStatus(req, res, next) {
       next(err);
     }
   }
+
+  export async function friendRequestStatus(req,res,next){
+    try {
+        return res.status(200).json(await service.friendRequestStatus(req.user, req.body))
+    } catch (err) {
+        next(err);
+    }
+}
