@@ -126,7 +126,8 @@ export async function searchUser(body) {
 
 export async function friendRequestStatus(user, body){
   try {
-    //const checkRequest = await Friend.findOne({ requestUser: user.id || user: body.userID, status: 'PENDING' || 'ACCEPTED' });
+    const checkRequest = await Friend.find ({ $or: [{ requestUser: body.userID}, {requestUser: user._id} ] } );
+    
     if (!checkRequest) {
       throw new ExistsError("No Friend Request Found");
     }
